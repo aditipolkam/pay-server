@@ -1,5 +1,4 @@
 const Tesseract = require("tesseract.js");
-const getAbsolutePath = require("../getAbsolutePath");
 
 function getDetailsFileContent(filePath) {
   Tesseract.recognize(filePath, "eng", { logger: (m) => console.log(m) })

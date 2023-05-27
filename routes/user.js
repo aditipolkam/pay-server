@@ -4,13 +4,17 @@ const getAbsolutePath = require("../helpers/getAbsolutePath");
 
 var router = express.Router();
 
-router.get("/register", async function (req, res) {
+router.post("/register", async function (req, res) {
+  //base64 strings
   let detailsFile = req.body.detailsFile;
   let payslipFile = req.body.payslipFile;
 
+  const detailsImageData = Buffer.from(detailsFile, "base64");
+  const payslipImageData = Buffer.from(payslipFile, "base64");
+
   // Get absolute path of the Files
-  const detailsFilePath = getAbsolutePath(detailsFile);
-  const payslipFilePath = getAbsolutePath(payslipFile);
+  const detailsFilePath = getAbsolutePath(detailsImageData);
+  const payslipFilePath = getAbsolutePath(payslipImageData);
 
   // get File ocr content in json
   const { name } = await getDetailsFileContent(detailsFilePath);
