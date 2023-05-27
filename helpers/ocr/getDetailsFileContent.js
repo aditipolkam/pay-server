@@ -56,10 +56,8 @@ function getDetailsFileContent(filePath) {
       console.log(`Aadhaar Number: ${aadhaarNumber}`);
       console.log("Address: ", address);
       console.log("Phone Number: ", phoneNumber);
-
-      return {
-        name,
-      };
+      console.log("Done");
+      return name;
     })
     .catch((err) => {
       console.error(err);
