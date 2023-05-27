@@ -1,0 +1,32 @@
+{
+  "name": "pay-server",
+  "version": "1.0.0",
+  "description": "an api to check user pay details and issue nfts to prove claims",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aditipolkam/pay-server.git"
+  },
+  "keywords": [
+    "nfts",
+    "pay-gap",
+    "equality",
+    "ocr",
+    "erc721"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aditipolkam/pay-server/issues"
+  },
+  "homepage": "https://github.com/aditipolkam/pay-server#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ethers": "^6.4.0",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security"
+  }
+}
