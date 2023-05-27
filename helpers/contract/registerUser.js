@@ -1,7 +1,7 @@
 require("dotenv").config();
 const ethers = require("ethers");
 
-const registerUser = async (address, detailsPdfCid, payslipPdfCid) => {
+const registerUser = async (address, claim, detailsFileCid, payslipFileCid) => {
   const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const contract = new ethers.Contract(
@@ -9,7 +9,12 @@ const registerUser = async (address, detailsPdfCid, payslipPdfCid) => {
     process.env.CONTRACT_ABI,
     wallet
   );
-  const tx = await contract.registerUser(address, detailsPdfCid, payslipPdfCid);
+  const tx = await contract.setUserDetails(
+    address,
+    claim,
+    detailsFileCid,
+    payslipFileCid
+  );
   await tx.wait();
   console.log("User registered successfully");
 };
