@@ -1,11 +1,16 @@
+//@ts-check
+
 const Tesseract = require("tesseract.js");
 const fs = require("fs");
 
 const getPayFileContent = async (filePath) => {
-  Tesseract.recognize(filePath, "eng", { logger: (m) => console.log(m) })
-    .then(({ data: { text } }) => {
+  try {
+    const tessRes = await Tesseract.recognize(filePath, "eng");
+    if (tessRes.data) {
+      const { text } = tessRes.data;
+
       // Output the entire recognized text
-      console.log(text);
+      console.debug(text);
 
       // Split the text into lines
       const lines = text.split("\n");
@@ -37,11 +42,11 @@ const getPayFileContent = async (filePath) => {
       console.log(`Net Pay: ${netPay}`);
 
       return { employeeName, netPay };
-    })
-    .catch((err) => {
-      // Log any errors
-      console.error(err);
-    });
+    }
+  } catch (err) {
+    // Log any errors
+    console.error(err);
+  }
 };
 
 module.exports = getPayFileContent;

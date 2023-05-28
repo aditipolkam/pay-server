@@ -1,12 +1,14 @@
 const Tesseract = require("tesseract.js");
 
-function getDetailsFileContent(filePath) {
-  Tesseract.recognize(filePath, "eng", { logger: (m) => console.log(m) })
+async function getDetailsFileContent(filePath) {
+  let data;
+  try {
+    const res = await Tesseract.recognize(filePath, "eng"); // , { logger: (m) => console.debug(m) })
+    if (res.data.text) {
+      const { text } = res.data;
 
-    .then(({ data: { text } }) => {
       // Split the text into lines
       const lines = text.split("\n");
-
       // Initialize variables to store the extracted data
       let dob = "";
       let aadhaarNumber = "";
@@ -50,19 +52,30 @@ function getDetailsFileContent(filePath) {
       }
 
       // Log the extracted data
-      console.log(`Name: ${name}`);
-      console.log(`Date of Birth: ${dob}`);
-      console.log(`Gender: ${gender}`);
-      console.log(`Aadhaar Number: ${aadhaarNumber}`);
-      console.log("Address: ", address);
-      console.log("Phone Number: ", phoneNumber);
-      console.log("Done");
-      return name;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      console.info("Parsing Complete");
+      console.table({
+        name,
+        dob,
+        gender,
+        aadhaarNumber,
+        address,
+        phoneNumber,
+      });
+      return {
+        name,
+        dob,
+        gender,
+        aadhaarNumber,
+        address,
+        phoneNumber,
+      };
+    }
+    return;
+  } catch (error) {
+    console.error(error);
+  }
 }
+
 // const file = "./test/ashi_aadhaar.png";
 
 module.exports = getDetailsFileContent;

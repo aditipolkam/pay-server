@@ -2,6 +2,10 @@ require("dotenv").config();
 const ethers = require("ethers");
 const lighthouse = require("@lighthouse-web3/sdk");
 
+const apiKey = process.env.LIGHTHOUSE_API_KEY;
+const publicKey = "0xd4c62eA11760C44C20c6cC48D4d5207BEF43c3Cb";
+const privateKey = process.env.PRIVATE_KEY;
+
 const signAuthMessage = async (publicKey, privateKey) => {
   const provider = new ethers.JsonRpcProvider();
   const signer = new ethers.Wallet(privateKey, provider);
@@ -13,9 +17,7 @@ const signAuthMessage = async (publicKey, privateKey) => {
 
 const uploadFileToIpfs = async (path) => {
   // const path = "C:/Users/aditi/Pictures/space-wallpapers/lighthouse.jpg"; //Give absolute path
-  const apiKey = process.env.LIGHTHOUSE_API_KEY;
-  const publicKey = "0xd4c62eA11760C44C20c6cC48D4d5207BEF43c3Cb";
-  const privateKey = process.env.PRIVATE_KEY;
+
   console.log(
     "Uploading encrypted file from ",
     path,
