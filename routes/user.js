@@ -1,6 +1,5 @@
 var express = require("express");
 require("dotenv").config();
-const fs = require("fs");
 const getAbsolutePath = require("../helpers/getAbsolutePath");
 const getDetailsFileContent = require("../helpers/ocr/getDetailsFileContent");
 const getPayFileContent = require("../helpers/ocr/getPayFileContent");
@@ -8,6 +7,7 @@ const registerUser = require("../helpers/contract/registerUser");
 const uploadFileToIpfs = require("../helpers/backup/uploadFileToIpfs");
 const multer = require("multer");
 const upload = multer({ dest: "./temp/images/" });
+const fs = require("fs");
 
 const cpUpload = upload.fields([
   { name: "detailsfile", maxCount: 1 },
@@ -18,11 +18,8 @@ var router = express.Router();
 
 router.post("/register", cpUpload, async function (req, res) {
   const address = req.body.address;
-  console.log(address);
-  //console.dir(req);
   console.dir(req.body);
   console.dir(req.files);
-  console.dir(req.files["detailsfile"]);
   const detailsFilePath = req.files["detailsfile"][0]["path"];
   const ocrRes = await getDetailsFileContent(detailsFilePath);
   if (!ocrRes) {
@@ -57,7 +54,6 @@ router.post("/register", cpUpload, async function (req, res) {
     } else {
       claim = "Pay more than 100000";
     }
-    claim = claim + "$";
   }
   // store File in IPFS and get cid
   const detailsFileCid = await uploadFileToIpfs(detailsFilePath);
