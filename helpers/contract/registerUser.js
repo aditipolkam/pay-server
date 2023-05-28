@@ -1,7 +1,6 @@
 require("dotenv").config();
 const ethers = require("ethers");
 const CONTRACT_ADDRESS = "0xe215Df07fbE5EF9CBf9EF101821e487F8d991078";
-const CONTRACT_ABI = require("../../utils/contractABI.json");
 const data = require("../../utils/contractAbi");
 const providerUrl = process.env.RPC_URL;
 console.log(providerUrl);
