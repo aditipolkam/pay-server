@@ -10,15 +10,20 @@ const multer = require("multer");
 const upload = multer({ dest: "./temp/images/" });
 
 const cpUpload = upload.fields([
-  { name: "detailsFile", maxCount: 1 },
-  { name: "payslipFile", maxCount: 1 },
+  { name: "detailsfile", maxCount: 1 },
+  { name: "payslipfile", maxCount: 1 },
 ]);
 
 var router = express.Router();
 
 router.post("/register", cpUpload, async function (req, res) {
   const address = req.body.address;
-  const detailsFilePath = req.files["detailsFile"][0]["path"];
+  console.log(address);
+  //console.dir(req);
+  console.dir(req.body);
+  console.dir(req.files);
+  console.dir(req.files["detailsfile"]);
+  const detailsFilePath = req.files["detailsfile"][0]["path"];
   const ocrRes = await getDetailsFileContent(detailsFilePath);
   if (!ocrRes) {
     return res.status(500).json({
@@ -27,7 +32,7 @@ router.post("/register", cpUpload, async function (req, res) {
     });
   }
   console.log(ocrRes);
-  const paySlipFilePath = req.files["payslipFile"][0]["path"];
+  const paySlipFilePath = req.files["payslipfile"][0]["path"];
   const { employeeName, netPay } = await getPayFileContent(paySlipFilePath);
   //check user pay range and user details accordingly
   let claim;
